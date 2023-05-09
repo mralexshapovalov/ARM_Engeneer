@@ -167,8 +167,8 @@
             this.Controls.Add(this.UnitMeasurement);
             this.Controls.Add(this.Articul);
             this.Controls.Add(this.Name);
-            this.Name = "AddParts";
-            this.Text = "Add_parts";
+           // this.Name = "AddParts";
+           // this.Text = "Add_parts";
             this.ResumeLayout(false);
             this.PerformLayout();
 

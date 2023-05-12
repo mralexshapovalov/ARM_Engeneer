@@ -139,5 +139,75 @@ namespace ARM_Engineer.Parts
 
             }
         }
+
+        private void Update()
+        {
+            dataBase.openConnection();
+
+            for (int index = 0; index < dataGridView1.Rows.Count; index++)
+            {
+                var rowState = (RowState)dataGridView1.Rows[index].Cells[5].Value;
+
+                if (rowState == RowState.Exsted)
+                    continue;
+
+                if (rowState == RowState.Deleted)
+                {
+                    var id = Convert.ToInt32(dataGridView1.Rows[index].Cells[0].Value);
+                    var deleteQuery = $"delete from Parts where Id={id}";
+
+                    var command = new SqlCommand(deleteQuery, dataBase.GetConnection());
+                    command.ExecuteNonQuery();
+                }
+
+
+            }
+
+            dataBase.clouseConnection();
+        }
+
+        private void deleteRow()
+        {
+            int index = dataGridView1.CurrentCell.RowIndex;
+
+            dataGridView1.Rows[index].Visible = false;
+
+            if(dataGridView1.Rows[index].Cells[0].Value.ToString() == string.Empty)
+            {
+                dataGridView1.Rows[index].Cells[5].Value = RowState.Deleted;
+                return;
+            }
+            dataGridView1.Rows[index].Cells[5].Value = RowState.Deleted;
+
+
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            //MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+
+            //DialogResult result = MessageBox.Show("Вы точно хотите удалить данную позицию?", "Удалить позицию", buttons);
+
+            //if (result == DialogResult.Yes)
+            //{
+                
+                
+            //}
+            //else
+            //{
+            //    this.Close();
+            //}
+
+            deleteRow();
+
+
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Update();
+        }
     }
 }

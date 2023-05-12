@@ -89,17 +89,47 @@ namespace ARM_Engineer.Parts
 
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        //private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+            
+        //}
+
+        private void Search(DataGridView  dataGridView)
+        {
+            dataGridView.Rows.Clear();
+
+            string searchString = $"select * from Parts where concat (Id,Name,Articul,UnitMeasurement,Agregat,Uzel) like '%"+Search_textBox.Text+"%'";
+
+            SqlCommand sqlCommand = new SqlCommand(searchString,dataBase.GetConnection());
+            dataBase.openConnection();
+
+            SqlDataReader sqlDataReader= sqlCommand.ExecuteReader();
+
+            while(sqlDataReader.Read())
+            {
+                ReadSingleRow(dataGridView, sqlDataReader);
+            }
+
+            sqlDataReader.Close();
+
+        }
+
+        private void Search_button_Click(object sender, EventArgs e)
+        {
+            Search(dataGridView1);
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             selectedRow = e.RowIndex;
             AddParts addParts = new AddParts();
             addParts.Show();
 
-            if (e.RowIndex>=0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[selectedRow];
-               
-               
+
+
                 addParts.Name_textBox.Text = row.Cells[1].Value.ToString();
                 addParts.Articul_textBox.Text = row.Cells[2].Value.ToString();
                 addParts.UnitMeasurement_tetxBox.Text = row.Cells[3].Value.ToString();

@@ -9,7 +9,7 @@ namespace ARM_Engineer
 {
     class DataBase
     {
-        SqlConnection sqlConnection = new SqlConnection(@"Data Source=DESKTOP-03FRQ5P;Initial Catalog=DataBaseEngineer;Integrated Security=True");
+        SqlConnection sqlConnection = new SqlConnection(@"Data Source=LAPTOP-N5BHSA15\SQLEXPRESS;Initial Catalog=DataBaseEngineer;Integrated Security=True");
 
         public void openConnection()
         {
@@ -17,8 +17,6 @@ namespace ARM_Engineer
             {
                 sqlConnection.Open();
             }
-
-
         }
 
         public void clouseConnection()
@@ -27,8 +25,6 @@ namespace ARM_Engineer
             {
                 sqlConnection.Close();
             }
-
-
         }
 
         public SqlConnection GetConnection()

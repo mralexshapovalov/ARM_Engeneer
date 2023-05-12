@@ -32,12 +32,9 @@
             this.Add_parts = new System.Windows.Forms.Button();
             this.Chainge = new System.Windows.Forms.Button();
             this.Delete = new System.Windows.Forms.Button();
-            //this.dataBaseEngineerDataSet = new ARM_Engineer.DataBaseEngineerDataSet();
             this.tableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-          //  this.tableTableAdapter = new ARM_Engineer.DataBaseEngineerDataSetTableAdapters.TableTableAdapter();
             this.Update_button = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-           // ((System.ComponentModel.ISupportInitialize)(this.dataBaseEngineerDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -70,19 +67,9 @@
             this.Delete.Text = "Удалить";
             this.Delete.UseVisualStyleBackColor = true;
             // 
-            // dataBaseEngineerDataSet
-            // 
-            //this.dataBaseEngineerDataSet.DataSetName = "DataBaseEngineerDataSet";
-            //this.dataBaseEngineerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // tableBindingSource
             // 
             this.tableBindingSource.DataMember = "Table";
-           // this.tableBindingSource.DataSource = this.dataBaseEngineerDataSet;
-            // 
-            // tableTableAdapter
-            // 
-           // this.tableTableAdapter.ClearBeforeFill = true;
             // 
             // Update_button
             // 
@@ -101,6 +88,8 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(755, 409);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Parts
             // 
@@ -114,7 +103,6 @@
             this.Controls.Add(this.Add_parts);
             this.Name = "Parts";
             this.Load += new System.EventHandler(this.Parts_Load);
-            //((System.ComponentModel.ISupportInitialize)(this.dataBaseEngineerDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

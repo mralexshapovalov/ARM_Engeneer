@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Name = new System.Windows.Forms.Label();
+            this.Names = new System.Windows.Forms.Label();
             this.Articul = new System.Windows.Forms.Label();
             this.UnitMeasurement = new System.Windows.Forms.Label();
             this.Agregat_Label = new System.Windows.Forms.Label();
@@ -42,14 +42,14 @@
             this.Uzel_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // Name
+            // Names
             // 
-            this.Name.AutoSize = true;
-            this.Name.Location = new System.Drawing.Point(12, 30);
-            this.Name.Name = "Name";
-            this.Name.Size = new System.Drawing.Size(83, 13);
-            this.Name.TabIndex = 0;
-            this.Name.Text = "Наименование";
+            this.Names.AutoSize = true;
+            this.Names.Location = new System.Drawing.Point(12, 30);
+            this.Names.Name = "Names";
+            this.Names.Size = new System.Drawing.Size(83, 13);
+            this.Names.TabIndex = 0;
+            this.Names.Text = "Наименование";
             // 
             // Articul
             // 
@@ -99,6 +99,7 @@
             this.OK_button.TabIndex = 5;
             this.OK_button.Text = "OK";
             this.OK_button.UseVisualStyleBackColor = true;
+            this.OK_button.Click += new System.EventHandler(this.OK_button_Click);
             // 
             // Cancle_button
             // 
@@ -108,6 +109,7 @@
             this.Cancle_button.TabIndex = 6;
             this.Cancle_button.Text = "Отмена";
             this.Cancle_button.UseVisualStyleBackColor = true;
+            this.Cancle_button.Click += new System.EventHandler(this.Cancle_button_Click);
             // 
             // Name_textBox
             // 
@@ -166,9 +168,9 @@
             this.Controls.Add(this.Agregat_Label);
             this.Controls.Add(this.UnitMeasurement);
             this.Controls.Add(this.Articul);
-            this.Controls.Add(this.Name);
-           // this.Name = "AddParts";
-           // this.Text = "Add_parts";
+            this.Controls.Add(this.Names);
+            this.Name = "AddParts";
+            this.Load += new System.EventHandler(this.AddParts_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,17 +178,17 @@
 
         #endregion
 
-        private System.Windows.Forms.Label Name;
+        private System.Windows.Forms.Label Names;
         private System.Windows.Forms.Label Articul;
         private System.Windows.Forms.Label UnitMeasurement;
         private System.Windows.Forms.Label Agregat_Label;
         private System.Windows.Forms.Label Uzel_Label;
         private System.Windows.Forms.Button OK_button;
         private System.Windows.Forms.Button Cancle_button;
-        private System.Windows.Forms.TextBox Name_textBox;
-        private System.Windows.Forms.TextBox Articul_textBox;
-        private System.Windows.Forms.TextBox UnitMeasurement_tetxBox;
-        private System.Windows.Forms.TextBox Agregat_textBox;
-        private System.Windows.Forms.TextBox Uzel_textBox;
+        protected internal System.Windows.Forms.TextBox Name_textBox;
+        protected internal System.Windows.Forms.TextBox Articul_textBox;
+        protected internal System.Windows.Forms.TextBox UnitMeasurement_tetxBox;
+        protected internal System.Windows.Forms.TextBox Agregat_textBox;
+        protected internal System.Windows.Forms.TextBox Uzel_textBox;
     }
 }

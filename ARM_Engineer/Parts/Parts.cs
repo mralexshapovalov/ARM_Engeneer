@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Drawing.Drawing2D;
 
+
 namespace ARM_Engineer.Parts
 {
     enum RowState
@@ -24,7 +25,7 @@ namespace ARM_Engineer.Parts
     {
         DataBase dataBase=new DataBase();
 
-        int selectionRow;
+        int selectedRow;
 
         public Parts()
         {
@@ -80,7 +81,33 @@ namespace ARM_Engineer.Parts
 
         private void Update_button_Click(object sender, EventArgs e)
         {
+            RefreshDataGrid(dataGridView1);
+        }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            selectedRow = e.RowIndex;
+            AddParts addParts = new AddParts();
+            addParts.Show();
+
+            if (e.RowIndex>=0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[selectedRow];
+               
+               
+                addParts.Name_textBox.Text = row.Cells[1].Value.ToString();
+                addParts.Articul_textBox.Text = row.Cells[2].Value.ToString();
+                addParts.UnitMeasurement_tetxBox.Text = row.Cells[3].Value.ToString();
+                addParts.Agregat_textBox.Text = row.Cells[4].Value.ToString();
+                addParts.Uzel_textBox.Text = row.Cells[5].Value.ToString();
+
+
+            }
         }
     }
 }

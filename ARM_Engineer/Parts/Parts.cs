@@ -15,7 +15,7 @@ namespace ARM_Engineer.Parts
 {
     enum RowState
     {
-        Exsted,
+        Existed,
         New,
         Modified,
         ModifiedNew,
@@ -48,7 +48,8 @@ namespace ARM_Engineer.Parts
             dataGridView1.Columns.Add("UnitMeasurement", "Единица измерения");
             dataGridView1.Columns.Add("Agregat", "Агрегат");
             dataGridView1.Columns.Add("Uzel", "Узел");
-          
+            dataGridView1.Columns.Add("isNew", String.Empty);
+
         }
 
         private void ReadSingleRow(DataGridView dataGridView,IDataRecord record)
@@ -98,7 +99,7 @@ namespace ARM_Engineer.Parts
         {
             dataGridView.Rows.Clear();
 
-            string searchString = $"select * from Parts where concat (Id,Name,Articul,UnitMeasurement,Agregat,Uzel) like '%"+Search_textBox.Text+"%'";
+            string searchString = $"select * from Parts where concat (Id,Name,Articul,UnitMeasurement,Agregat,Uzel) like '%" +Search_textBox.Text+"%'";
 
             SqlCommand sqlCommand = new SqlCommand(searchString,dataBase.GetConnection());
             dataBase.openConnection();
@@ -139,22 +140,36 @@ namespace ARM_Engineer.Parts
 
             }
         }
+        private void deleteRow()
+        {
+            int index = dataGridView1.CurrentCell.RowIndex;
 
+            dataGridView1.Rows[index].Visible = false;
+
+            if (dataGridView1.Rows[index].Cells[0].Value.ToString() == string.Empty)
+            {
+                dataGridView1.Rows[index].Cells[6].Value = RowState.Deleted;
+                return;
+            }
+            dataGridView1.Rows[index].Cells[6].Value = RowState.Deleted;
+
+
+        }
         private void Update()
         {
             dataBase.openConnection();
 
             for (int index = 0; index < dataGridView1.Rows.Count; index++)
             {
-                var rowState = (RowState)dataGridView1.Rows[index].Cells[5].Value;
+                var rowState = (RowState)dataGridView1.Rows[index].Cells[6].Value;
 
-                if (rowState == RowState.Exsted)
+                if (rowState == RowState.Existed)
                     continue;
 
                 if (rowState == RowState.Deleted)
                 {
                     var id = Convert.ToInt32(dataGridView1.Rows[index].Cells[0].Value);
-                    var deleteQuery = $"delete from Parts where Id={id}";
+                    var deleteQuery = $"delete from Parts where Id = {id}";
 
                     var command = new SqlCommand(deleteQuery, dataBase.GetConnection());
                     command.ExecuteNonQuery();
@@ -166,21 +181,7 @@ namespace ARM_Engineer.Parts
             dataBase.clouseConnection();
         }
 
-        private void deleteRow()
-        {
-            int index = dataGridView1.CurrentCell.RowIndex;
-
-            dataGridView1.Rows[index].Visible = false;
-
-            if(dataGridView1.Rows[index].Cells[0].Value.ToString() == string.Empty)
-            {
-                dataGridView1.Rows[index].Cells[5].Value = RowState.Deleted;
-                return;
-            }
-            dataGridView1.Rows[index].Cells[5].Value = RowState.Deleted;
-
-
-        }
+       
 
         private void Delete_Click(object sender, EventArgs e)
         {

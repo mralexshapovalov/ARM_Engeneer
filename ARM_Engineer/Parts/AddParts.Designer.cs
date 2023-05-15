@@ -40,6 +40,7 @@
             this.UnitMeasurement_tetxBox = new System.Windows.Forms.TextBox();
             this.Agregat_textBox = new System.Windows.Forms.TextBox();
             this.Uzel_textBox = new System.Windows.Forms.TextBox();
+            this.Id_textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Names
@@ -152,11 +153,19 @@
             this.Uzel_textBox.Size = new System.Drawing.Size(267, 25);
             this.Uzel_textBox.TabIndex = 11;
             // 
+            // Id_textBox1
+            // 
+            this.Id_textBox1.Location = new System.Drawing.Point(323, 46);
+            this.Id_textBox1.Name = "Id_textBox1";
+            this.Id_textBox1.Size = new System.Drawing.Size(100, 20);
+            this.Id_textBox1.TabIndex = 12;
+            // 
             // AddParts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 301);
+            this.Controls.Add(this.Id_textBox1);
             this.Controls.Add(this.Uzel_textBox);
             this.Controls.Add(this.Agregat_textBox);
             this.Controls.Add(this.UnitMeasurement_tetxBox);
@@ -190,5 +199,6 @@
         protected internal System.Windows.Forms.TextBox UnitMeasurement_tetxBox;
         protected internal System.Windows.Forms.TextBox Agregat_textBox;
         protected internal System.Windows.Forms.TextBox Uzel_textBox;
+        protected internal System.Windows.Forms.TextBox Id_textBox1;
     }
 }

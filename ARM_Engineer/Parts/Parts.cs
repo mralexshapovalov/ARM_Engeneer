@@ -42,13 +42,15 @@ namespace ARM_Engineer.Parts
         }
         private void CreateColumns()
         {
-            dataGridView1.Columns.Add("Id", "id");
+            dataGridView1.Columns.Add("id", "id");
             dataGridView1.Columns.Add("Name", "Наименование");
             dataGridView1.Columns.Add("Articul", "Артикул");
             dataGridView1.Columns.Add("UnitMeasurement", "Единица измерения");
             dataGridView1.Columns.Add("Agregat", "Агрегат");
             dataGridView1.Columns.Add("Uzel", "Узел");
-            dataGridView1.Columns.Add("isNew", String.Empty);
+            dataGridView1.Columns.Add("IsNew", string.Empty);
+            dataGridView1.Columns["IsNew"].Visible = false;
+
 
         }
 
@@ -99,7 +101,7 @@ namespace ARM_Engineer.Parts
         {
             dataGridView.Rows.Clear();
 
-            string searchString = $"select * from Parts where concat (Id,Name,Articul,UnitMeasurement,Agregat,Uzel) like '%" +Search_textBox.Text+"%'";
+            string searchString = $"select * from Parts where concat (id,Name,Articul,UnitMeasurement,Agregat,Uzel) like '%" +Search_textBox.Text+"%'";
 
             SqlCommand sqlCommand = new SqlCommand(searchString,dataBase.GetConnection());
             dataBase.openConnection();
@@ -122,23 +124,7 @@ namespace ARM_Engineer.Parts
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            selectedRow = e.RowIndex;
-            AddParts addParts = new AddParts();
-            addParts.Show();
-
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView1.Rows[selectedRow];
-
-
-                addParts.Name_textBox.Text = row.Cells[1].Value.ToString();
-                addParts.Articul_textBox.Text = row.Cells[2].Value.ToString();
-                addParts.UnitMeasurement_tetxBox.Text = row.Cells[3].Value.ToString();
-                addParts.Agregat_textBox.Text = row.Cells[4].Value.ToString();
-                addParts.Uzel_textBox.Text = row.Cells[5].Value.ToString();
-
-
-            }
+            
         }
         private void deleteRow()
         {
@@ -149,29 +135,63 @@ namespace ARM_Engineer.Parts
             if (dataGridView1.Rows[index].Cells[0].Value.ToString() == string.Empty)
             {
                 dataGridView1.Rows[index].Cells[6].Value = RowState.Deleted;
+
                 return;
+
             }
             dataGridView1.Rows[index].Cells[6].Value = RowState.Deleted;
 
 
+
         }
+
         private void Update()
         {
             dataBase.openConnection();
 
             for (int index = 0; index < dataGridView1.Rows.Count; index++)
             {
+
                 var rowState = (RowState)dataGridView1.Rows[index].Cells[6].Value;
 
                 if (rowState == RowState.Existed)
+                {
                     continue;
-
+                }
                 if (rowState == RowState.Deleted)
                 {
                     var id = Convert.ToInt32(dataGridView1.Rows[index].Cells[0].Value);
-                    var deleteQuery = $"delete from Parts where Id = {id}";
+                    var deleteQuery = $"delete from Parts where id = {id}";
 
-                    var command = new SqlCommand(deleteQuery, dataBase.GetConnection());
+                    StringBuilder errorMessages = new StringBuilder();
+                    try
+                    {
+                        var command = new SqlCommand(deleteQuery, dataBase.GetConnection());
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        for (int i = 0; i < ex.Errors.Count; i++)
+                        {
+                            errorMessages.Append(
+                             "Ошибка: " + ex.Errors[i].Message + "\n"
+                             );
+                        }
+                        MessageBox.Show(errorMessages.ToString());
+                    }
+                }
+                if (rowState == RowState.Modified)
+                {
+                    var id = dataGridView1.Rows[index].Cells[0].Value.ToString();
+                    var name = dataGridView1.Rows[index].Cells[1].Value.ToString();
+                    var articul = dataGridView1.Rows[index].Cells[2].Value.ToString();
+                    var unitMeasurement = dataGridView1.Rows[index].Cells[3].Value.ToString();
+                    var agregat = dataGridView1.Rows[index].Cells[4].Value.ToString();
+                    var uzel = dataGridView1.Rows[index].Cells[5].Value.ToString();
+
+                    var changeQueiry = $"update Parts set Name ='{name}',Articul ='{articul}',UnitMeasurement ='{unitMeasurement}',Agregat ='{agregat}',Uzel ='{uzel}' where id ='{id}'";
+
+                    var command = new SqlCommand(changeQueiry, dataBase.GetConnection());
                     command.ExecuteNonQuery();
                 }
 
@@ -181,34 +201,88 @@ namespace ARM_Engineer.Parts
             dataBase.clouseConnection();
         }
 
+
+    
+
        
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            //MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
 
-            //DialogResult result = MessageBox.Show("Вы точно хотите удалить данную позицию?", "Удалить позицию", buttons);
+            DialogResult result = MessageBox.Show("Вы точно хотите удалить данную позицию?", "Удалить позицию", buttons);
 
-            //if (result == DialogResult.Yes)
-            //{
-                
-                
-            //}
-            //else
-            //{
-            //    this.Close();
-            //}
+            if (result == DialogResult.Yes)
+            {
+                deleteRow();
+                Update();
+            }
+            else
+            {
+                this.Close();
+            }
 
-            deleteRow();
+           
 
 
 
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+       
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Update();
+            selectedRow = e.RowIndex;
+            AddParts addParts = new AddParts();
+            addParts.Show();
+
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[selectedRow];
+
+       
+                addParts.Name_textBox.Text = row.Cells[1].Value.ToString();
+                addParts.Articul_textBox.Text = row.Cells[2].Value.ToString();
+                addParts.UnitMeasurement_tetxBox.Text = row.Cells[3].Value.ToString();
+                addParts.Agregat_textBox.Text = row.Cells[4].Value.ToString();
+                addParts.Uzel_textBox.Text = row.Cells[5].Value.ToString();
+
+
+            }
+
+
+           
+        }
+        private void Change()
+        {
+            AddParts addParts = new AddParts();
+            addParts.Show();
+            var selectedIndex = dataGridView1.CurrentCell.RowIndex;
+
+            var name = addParts.Name_textBox.Text;
+            var articul = addParts.Articul_textBox.Text;
+            var unitMeasurement = addParts.UnitMeasurement_tetxBox.Text;
+            var agregat = addParts.Agregat_textBox.Text;
+            var uzel = addParts.Uzel_textBox.Text;
+
+
+            if (dataGridView1.Rows[selectedIndex].Cells[0].Value.ToString() !=string.Empty)
+            {
+                dataGridView1.Rows[selectedIndex].SetValues(name,articul,unitMeasurement,agregat,uzel);
+                dataGridView1.Rows[selectedIndex].Cells[6].Value = RowState.Modified;
+            }
+
+            
+        }
+
+        private void Chainge_Click(object sender, EventArgs e)
+        {
+           
+
+            
+
+            Change();
         }
     }
 }

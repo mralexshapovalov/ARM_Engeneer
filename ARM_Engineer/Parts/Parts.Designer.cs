@@ -34,10 +34,9 @@
             this.Delete = new System.Windows.Forms.Button();
             this.tableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Update_button = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Search_textBox = new System.Windows.Forms.TextBox();
             this.Search_button = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.tableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -60,6 +59,7 @@
             this.Chainge.TabIndex = 2;
             this.Chainge.Text = "Изменить";
             this.Chainge.UseVisualStyleBackColor = true;
+            this.Chainge.Click += new System.EventHandler(this.Chainge_Click);
             // 
             // Delete
             // 
@@ -85,16 +85,6 @@
             this.Update_button.UseVisualStyleBackColor = true;
             this.Update_button.Click += new System.EventHandler(this.Update_button_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(29, 60);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(755, 409);
-            this.dataGridView1.TabIndex = 4;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
             // Search_textBox
             // 
             this.Search_textBox.Location = new System.Drawing.Point(561, 14);
@@ -112,25 +102,26 @@
             this.Search_button.UseVisualStyleBackColor = true;
             this.Search_button.Click += new System.EventHandler(this.Search_button_Click);
             // 
-            // button1
+            // dataGridView1
             // 
-            this.button1.Location = new System.Drawing.Point(330, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Обновить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 81);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(772, 388);
+            this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // Parts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(796, 481);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Search_button);
             this.Controls.Add(this.Search_textBox);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Update_button);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.Chainge);
@@ -153,9 +144,8 @@
         private System.Windows.Forms.BindingSource tableBindingSource;
     
         private System.Windows.Forms.Button Update_button;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox Search_textBox;
         private System.Windows.Forms.Button Search_button;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
